@@ -48,10 +48,28 @@ def MakeChangesOnStock (device, qtd, inOrOut):
     headsetKJValueCell = stockSheet['B5'].value
     headsetPnPValueCell = stockSheet['B6'].value
     
-    if device == 'TECLADO' and addOrChange == 'Entrada':
-        stockSheet['B3'].value = qtd
-    elif device == 'MOUSE':
-        stockSheet['B4'].value = qtd
+    if device == 'TECLADO' and addOrChange == 'ENTRADA':
+        stockSheet['B3'].value = stockSheet['B3'].value + qtd
+    elif device == 'TECLADO' and addOrChange == 'SAIDA' or addOrChange == 'SAÍDA':
+        stockSheet['B3'].value = stockSheet['B3'].value - qtd
+
+    if device == 'MOUSE' and addOrChange == 'ENTRADA':
+        stockSheet['B4'].value = stockSheet['B4'].value + qtd
+    elif device == 'MOUSE' and addOrChange == 'SAIDA' or addOrChange == 'SAÍDA':
+        stockSheet['B4'].value = stockSheet['B4'].value - qtd
+
+    if device == 'HEADSET KJ' and addOrChange == 'ENTRADA':
+        stockSheet['B5'].value = stockSheet['B5'].value + qtd
+    elif device == 'HEADSET KJ' and addOrChange == 'SAIDA' or addOrChange == 'SAÍDA':
+        stockSheet['B5'].value = stockSheet['B5'].value - qtd
+
+    if device == 'HEADSET PNP' and addOrChange == 'ENTRADA':
+        stockSheet['HEADSET PNP'].value = stockSheet['B6'].value + qtd
+    elif device == 'HEADSET PNP' and addOrChange == 'SAIDA' or addOrChange == 'SAÍDA':
+        stockSheet['B6'].value = stockSheet['B6'].value - qtd
+
+
+
     
 # ====== THE MAIN FUNCIONALITY ====== #
 
@@ -74,7 +92,7 @@ while statusCondicionalDevice == False:
         statusCondicionalHeadset = False
         while statusCondicionalHeadset == False:
             if chooseTypeOfHeadset == 'PNP' or chooseTypeOfHeadset == 'KJ':
-                device = device + ' ' + chooseTypeOfHeadset.capitalize()
+                device = device + ' ' + chooseTypeOfHeadset
                 statusCondicionalHeadset = True
                 statusCondicionalDevice = True
    
@@ -113,6 +131,7 @@ currentDate = insertDateToBrazilianFormart()
 positionsValuesInOrder = [ticket,device,qtd, addOrChange, currentDate ]
 
 insertDataOnSheets(positionsValuesInOrder)
+MakeChangesOnStock(device,qtd,addOrChange)
 wb.save('Estoque e registro.xlsx')
 print('Registro salvo com sucesso.')
 
