@@ -44,6 +44,14 @@ def insertDataOnSheets(positionsValuesInOrder): # This function will check if th
 
 def MakeChangesOnStock (device, qtd, inOrOut):
     tecladoValueCell = stockSheet['B3'].value
+    mouseValueCell = stockSheet['B4'].value
+    headsetKJValueCell = stockSheet['B5'].value
+    headsetPnPValueCell = stockSheet['B6'].value
+    
+    if device == 'TECLADO' and addOrChange == 'Entrada':
+        stockSheet['B3'].value = qtd
+    elif device == 'MOUSE':
+        stockSheet['B4'].value = qtd
     
 # ====== THE MAIN FUNCIONALITY ====== #
 
